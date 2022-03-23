@@ -3,39 +3,6 @@ import random
 from lib.draw_grid import draw_grid
 import lib.errors as err
 
-"""
-Goal of this Simulation:
-Visualize a HMI for a 2-D factory including manufacturing machines, intralogistics, productivity stats.
-[3-D factory by having floors, switch floor with arrows on display]
-Either pre-setup or player-based input for layout
-Grid-based system (rectangles are 25x25 pixels)   CHANGE?
-
-Available machines: (add them step by step)
-product-adder
-storage unit
-box_lid-adder
-
-Available intralogistics elements:
-conveyor belt
-roller , accumulating roller
-robot arm
-drones?
-
-Available products:
-empty box
-bottles
-
-++V0.0 add grid and visualize
-++V0.1 add first pre-setup machine, first belt
-++V0.1.1 define interfaces and orientation check
-++V0.2 add empty box
-++V0.3 add animations to machines, movement to products
-++V0.4 expand setup
-V0.5a switch to player based layout -> FactorySimManual.py
-V1.2 decorate HUD
-
-"""
-
 WIDTH = 1000	# make sure this matches a factor of block_size from function draw_grid! (does right now)
 HEIGHT = 400	# make sure this matches a factor of block_size from function draw_grid! (does right now)
 BACKGROUND = (255, 255, 255)
@@ -293,9 +260,9 @@ class ProductAdder(Machine):
 		self.rect = pygame.Rect(coordinates, self.size)
 		self.product = product
 		if product == "boxes":
-			tempimage = pygame.image.load("res/factory/boxAdder.png").convert()
+			tempimage = pygame.image.load("res/machines/boxAdder.png").convert()
 		elif product == "bottles":
-			tempimage = pygame.image.load("res/factory/bottleAdder.png").convert()
+			tempimage = pygame.image.load("res/machines/bottleAdder.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)	
 		self.orientation = orientation
 		if orientation == "horizontal":
@@ -351,7 +318,7 @@ class StorageUnit(Machine):
 		super().__init__(coordinates)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
-		tempimage = pygame.image.load("res/factory/storage.png").convert()
+		tempimage = pygame.image.load("res/machines/storage.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 		self.get_interfaces()
 	
@@ -370,7 +337,7 @@ class Lid_Adder(Machine):
 		super().__init__(coordinates)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
-		tempimage = pygame.image.load("res/factory/box_lid_adder.png").convert_alpha()
+		tempimage = pygame.image.load("res/machines/box_lid_adder.png").convert_alpha()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 		self.grabbed = False
 		self.direction = None
@@ -450,9 +417,9 @@ class RollerConveyor(Conveyor):
 		super().__init__(coordinates)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
-		tempimage = pygame.image.load("res/factory/rollerConveyor.png").convert()
+		tempimage = pygame.image.load("res/machines/rollerConveyor.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)	
-		tempimage1 = pygame.image.load("res/factory/rollerConveyor1.png").convert()
+		tempimage1 = pygame.image.load("res/machines/rollerConveyor1.png").convert()
 		self.image1 = pygame.transform.smoothscale(tempimage1, self.size)	
 		self.get_interfaces()
 		self.check_orientation()	# can only be called here since in class __init__ the images are not yet set
@@ -467,9 +434,9 @@ class TIntersection(RollerConveyor):
 	"""
 	def __init__(self,coordinates, direction):
 		super().__init__(coordinates)
-		tempimage = pygame.image.load("res/factory/TIntersection.png").convert()
+		tempimage = pygame.image.load("res/machines/TIntersection.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)	
-		tempimage1 = pygame.image.load("res/factory/TIntersection1.png").convert()
+		tempimage1 = pygame.image.load("res/machines/TIntersection1.png").convert()
 		self.image1 = pygame.transform.smoothscale(tempimage1, self.size)	
 		self.direction = direction
 		if direction == "up":
@@ -510,7 +477,7 @@ class RobotArm(Logistics):
 		self.rect = pygame.Rect(coordinates, self.size)
 		self.images = dict()
 		for i in range(0,8):
-			path = "res/factory/robotArm/robotArm" + str(i+1) + ".png"
+			path = "res/machines/robotArm/robotArm" + str(i+1) + ".png"
 			tempimage = pygame.image.load(path).convert()
 			self.images[i+1] = pygame.transform.smoothscale(tempimage, self.size)		
 		self.left_interface = pygame.Rect(self.coordinates[0]-1, self.coordinates[1], 3, 25)
@@ -801,11 +768,11 @@ class Box(Product):
 		super().__init__(coordinates)
 		
 		self.rect = pygame.Rect((coordinates[0]+3, coordinates[1]+3), self.size)
-		tempimage = pygame.image.load("res/factory/box.png").convert_alpha()
+		tempimage = pygame.image.load("res/products/box.png").convert_alpha()
 		self.image_empty = pygame.transform.smoothscale(tempimage, self.size)	
-		tempimage = pygame.image.load("res/factory/boxedBottles.png").convert_alpha()
+		tempimage = pygame.image.load("res/products/boxedBottles.png").convert_alpha()
 		self.image_boxed_bottles = pygame.transform.smoothscale(tempimage, self.size)
-		tempimage = pygame.image.load("res/factory/box_lid.png").convert_alpha()
+		tempimage = pygame.image.load("res/products/box_lid.png").convert_alpha()
 		self.image_box_lid = pygame.transform.smoothscale(tempimage, self.size)
 		self.image = self.image_empty
 		self.content = None 
@@ -820,7 +787,7 @@ class Bottles(Product):
 	def __init__(self, coordinates):
 		super().__init__(coordinates)
 		self.rect = pygame.Rect((coordinates[0]+3, coordinates[1]+3), self.size)
-		tempimage = pygame.image.load("res/factory/bottles.png").convert_alpha()
+		tempimage = pygame.image.load("res/products/bottles.png").convert_alpha()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 		
 		
@@ -864,6 +831,7 @@ def generate_ID():
 		return ID
 
 def main():
+	print(manual_mode)
 	global MACHINES
 	global LOGISTICS
 	global PRODUCTS
@@ -970,4 +938,5 @@ def main():
 		#clock.tick(5)
 
 if __name__ == "__main__":
+	manual_mode = False
 	main()
