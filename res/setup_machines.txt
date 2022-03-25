@@ -1,0 +1,8 @@
+ProductAdder,50,50,horizontal,boxes,
+ProductAdder,225,200,horizontal,boxes,
+ProductAdder,100,0,vertical,bottles,
+ProductAdder,350,100,vertical,bottles,
+StorageUnit,75,150,
+LidAdder,250,50,
+TIntersection,100,50,down,
+RobotArm,300,150,up,
