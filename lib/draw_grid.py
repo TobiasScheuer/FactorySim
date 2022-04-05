@@ -14,5 +14,5 @@ def draw_grid(screen, HEIGHT, WIDTH, block_size):
 	
 	for z in range(0, int(HEIGHT/block_size)):
 		gfxdraw.hline(screen, 0, WIDTH, z*block_size, (20,20,20, 60) ) 
-	for x in range(0, int(WIDTH/block_size)):
+	for x in range(0, int(WIDTH/block_size)+1):
 		gfxdraw.vline(screen, x*block_size, 0, HEIGHT, (20,20,20, 60) )

@@ -4,7 +4,7 @@ from lib.load_setup import load_setup
 from res.machines import Conveyor
 
 
-WIDTH = 1000	# make sure this matches a factor of block_size from function draw_grid! (does right now)
+WIDTH = 800	# make sure this matches a factor of block_size from function draw_grid! (does right now)
 HEIGHT = 400	# make sure this matches a factor of block_size from function draw_grid! (does right now)
 BACKGROUND = (255, 255, 255)
 MACHINES = list()
@@ -33,7 +33,7 @@ class Button():
 		self.size = size
 		self.rect = pygame.Rect(coordinates, self.size)
 		if buttontype == "Run":
-			tempimage = pygame.image.load("res/buttons/Button_Run.png").convert()
+			tempimage = pygame.image.load("images/buttons/Button_Run.png").convert()
 
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 
@@ -42,9 +42,9 @@ def initiate_cursors():
 	doc
 	"""
 	size = (20,20)
-	tempimage = pygame.image.load("res/buttons/glove.png").convert_alpha()
+	tempimage = pygame.image.load("images/buttons/glove.png").convert_alpha()
 	image_open = pygame.transform.smoothscale(tempimage, size)
-	tempimage = pygame.image.load("res/buttons/glove_closed.png").convert_alpha()
+	tempimage = pygame.image.load("images/buttons/glove_closed.png").convert_alpha()
 	image_closed = pygame.transform.smoothscale(tempimage, size)
 	cursor_open = pygame.cursors.Cursor((5,5), image_open)
 	cursor_closed = pygame.cursors.Cursor((5,5), image_closed)
@@ -58,7 +58,10 @@ def main():
 	global IDS
 	clock = pygame.time.Clock()
 	pygame.init()
-	screen = pygame.display.set_mode((WIDTH, HEIGHT))
+	if manual_mode:
+		screen = pygame.display.set_mode((WIDTH+200, HEIGHT))
+	else:
+		screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 	if manual_mode is False:
 		#TODO: load setup from external file
@@ -92,7 +95,7 @@ def main():
 		global BUTTONS
 		cursors = initiate_cursors()
 		pygame.mouse.set_cursor(cursors[0])
-		run_button = Button((925,300), (150,75), "Run")
+		run_button = Button((WIDTH+25,300), (150,75), "Run")
 		BUTTONS.append(run_button)
 		mouse_down = False
 	SPAWNTIMER, t = pygame.USEREVENT+1, 5000
@@ -169,5 +172,5 @@ def main():
 		#clock.tick(5)
 
 if __name__ == "__main__":
-	manual_mode = False
+	manual_mode = True
 	main()
