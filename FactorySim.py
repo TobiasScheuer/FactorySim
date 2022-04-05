@@ -1,8 +1,7 @@
 import pygame
 from lib.draw_grid import draw_grid
 from lib.load_setup import load_setup
-import lib.errors as err
-from res.machines import Conveyor, LidAdder, RobotArm
+from res.machines import Conveyor
 
 
 WIDTH = 1000	# make sure this matches a factor of block_size from function draw_grid! (does right now)
@@ -79,7 +78,7 @@ def main():
 		print("xx/-- Automatic interface and orientation detection in progress, please wait")
 		for i, machine in enumerate(MACHINES):
 				machine.get_interfaces(LOGISTICS, MACHINES)
-				if isinstance(machine, LidAdder):
+				if machine.type == "LidAdder":
 					machine.check_orientation(LOGISTICS, MACHINES)
 		print("xxx/- Automatic interface and orientation detection in progress, please wait")
 		for j in range(0,len(LOGISTICS)+1):
@@ -118,7 +117,7 @@ def main():
 					PRODUCTS = machine.update(IDS, LOGISTICS, MACHINES, PRODUCTS)
 			elif event.type == CHECKTIMER:
 				for i, logistic in enumerate(LOGISTICS):
-					if isinstance(logistic, RobotArm):
+					if logistic.type == "RobotArm":
 						logistic.update(PRODUCTS)
 		if manual_mode:
 			for event in pygame.event.get():
@@ -155,7 +154,7 @@ def main():
 					screen.blit(entity.image1, entity.rect)	
 				else:
 					screen.blit(entity.image, entity.rect)
-					if isinstance(entity, RobotArm):
+					if entity.type == "RobotArm":
 						entity.update(PRODUCTS)
 					else:
 						entity.update()
