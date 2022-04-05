@@ -65,7 +65,7 @@ class Product:
 			machine_index = self.rect.collidelist(MACHINES)
 			if machine_index >= 0:
 				machine = MACHINES[machine_index]
-				if isinstance(machine, StorageUnit):
+				if machine.type == "StorageUnit":
 					self.rect.update((machine.coordinates[0]+3, machine.coordinates[1]+3), self.size)
 					self.busy = True
 

@@ -26,7 +26,7 @@ def check_collision(own_rect, collision_box, PRODUCTS, MACHINES, LOGISTICS, igno
 				collision = True
 				break
 		for k, logistic in enumerate(LOGISTICS):
-			if hasattr(logistic, "images"): # temporary solution to check for RobotArms without import RobotArms
+			if logistic.type == "RobotArm": 
 				if logistic.rect.colliderect(collision_box) is True:
 					collision = True
 					break

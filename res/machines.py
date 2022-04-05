@@ -1,6 +1,7 @@
 import pygame
 from lib.generate_ID import generate_ID
 from lib.check_collision import check_collision
+import lib.errors as err
 from .products import Box, Bottles
 
 class Resources:
@@ -249,6 +250,7 @@ class ProductAdder(Machine):
 		super().__init__(coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
+		self.type = "ProductAdder"
 		self.product = product
 		if product == "boxes":
 			tempimage = pygame.image.load("images/machines/boxAdder.png").convert()
@@ -312,6 +314,7 @@ class StorageUnit(Machine):
 		super().__init__(coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
+		self.type = "StorageUnit"
 		tempimage = pygame.image.load("images/machines/storage.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 		self.get_interfaces(LOGISTICS, MACHINES)
@@ -332,6 +335,7 @@ class LidAdder(Machine):
 		super().__init__(coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
+		self.type = "LidAdder"
 		tempimage = pygame.image.load("images/machines/box_lid_adder.png").convert_alpha()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)
 		self.grabbed = False
@@ -412,6 +416,7 @@ class RollerConveyor(Conveyor):
 		super().__init__(coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES)
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
+		self.type = "RollerConveyor"
 		tempimage = pygame.image.load("images/machines/rollerConveyor.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)	
 		tempimage1 = pygame.image.load("images/machines/rollerConveyor1.png").convert()
@@ -429,6 +434,7 @@ class TIntersection(RollerConveyor):
 	"""
 	def __init__(self,coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES, direction):
 		super().__init__(coordinates, IDS, WIDTH, HEIGHT, LOGISTICS, MACHINES)
+		self.type = "TIntersection"
 		tempimage = pygame.image.load("images/machines/TIntersection.png").convert()
 		self.image = pygame.transform.smoothscale(tempimage, self.size)	
 		tempimage1 = pygame.image.load("images/machines/TIntersection1.png").convert()
@@ -472,6 +478,7 @@ class RobotArm(Logistics):
 		self.counter = 0
 		self.size = (25,25)
 		self.rect = pygame.Rect(coordinates, self.size)
+		self.type = "RobotArm"
 		self.images = dict()
 		for i in range(0,8):
 			path = "images/machines/robotArm/robotArm" + str(i+1) + ".png"
