@@ -137,11 +137,6 @@ def main():
 					if color_here == BACKGROUND or color_here == (157,157,157):
 						temp_rect = Placeholder((temp_x, temp_y))
 						MARKED.append(temp_rect)
-					else:
-						pass
-						#print(color_here)
-				else:
-					print("Mouse out of bounds")
 					
 			else:
 				pygame.mouse.set_cursor(cursors[0])
