@@ -113,7 +113,7 @@ def main():
 			for i,button in enumerate(BUTTONS):
 				screen.blit(button.image, button.rect)
 			for i,placeholder in enumerate(MARKED):
-					screen.blit(placeholder.image, placeholder.rect)
+				screen.blit(placeholder.image, placeholder.rect)
 		for event in pygame.event.get():
 			if event.type == SPAWNTIMER:
 				for j, machine in enumerate(MACHINES):
@@ -122,18 +122,15 @@ def main():
 				for i, logistic in enumerate(LOGISTICS):
 					if logistic.type == "RobotArm":
 						logistic.update(PRODUCTS)
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				mouse_down = True
+			if event.type == pygame.MOUSEBUTTONUP:
+				mouse_down = False
 		if manual_mode:
-			for event in pygame.event.get():
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					mouse_down = True
-				if event.type == pygame.MOUSEBUTTONUP:
-					mouse_down = False
 			if mouse_down == True:
 				pygame.mouse.set_cursor(cursors[1])
 				mouse_position = pygame.mouse.get_pos()
-				if mouse_position[0] > WIDTH:
-					pass # check for pressed buttons
-				else:
+				if 0 < mouse_position[0] < WIDTH+200:
 					temp_x = (int(mouse_position[0]/25 )) *25
 					temp_y = (int(mouse_position[1]/25 )) *25
 					color_here = screen.get_at((mouse_position[0], mouse_position[1]))
@@ -141,8 +138,11 @@ def main():
 						temp_rect = Placeholder((temp_x, temp_y))
 						MARKED.append(temp_rect)
 					else:
-						print(color_here)
-					#print(MARKED)
+						pass
+						#print(color_here)
+				else:
+					print("Mouse out of bounds")
+					
 			else:
 				pygame.mouse.set_cursor(cursors[0])
 		for i,machine in enumerate(MACHINES):
